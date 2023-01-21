@@ -28,11 +28,14 @@ export class UsersService {
     });
   }
 
-  async create(email: User['email'], password: string): Promise<User> {
+  async create(
+    userData: Omit<User, 'id' | 'role'>,
+    password: string,
+  ): Promise<User> {
     try {
       return await this.prismaService.user.create({
         data: {
-          email,
+          ...userData,
           password: {
             create: {
               hashedPassword: password,
