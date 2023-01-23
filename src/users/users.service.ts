@@ -1,6 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Password, User } from '@prisma/client';
-import { IsEmail } from 'class-validator';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
