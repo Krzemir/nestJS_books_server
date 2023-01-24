@@ -7,13 +7,28 @@ export class UsersService {
   constructor(private prismaService: PrismaService) { }
 
   getAll(): Promise<User[]> {
-    return this.prismaService.user.findMany();
+    return this.prismaService.user.findMany({
+      include: {
+        books: {
+          include: {
+            book: true,
+          },
+        },
+      },
+    });
   }
 
   getById(id: User['id']): Promise<User> | null {
     return this.prismaService.user.findUnique({
       where: {
         id,
+      },
+      include: {
+        books: {
+          include: {
+            book: true,
+          },
+        },
       },
     });
   }
@@ -83,7 +98,7 @@ export class UsersService {
         throw error;
       }
     }
-  }
+  };
 
   deleteById(id: User['id']): Promise<User> {
     return this.prismaService.user.delete({
